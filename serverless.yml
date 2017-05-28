@@ -44,7 +44,8 @@ package:
     - .gitignore
     - .venv
     - '!.venv/lib/python3.6/site-packages/**'
-
+  include:
+    - KakaoReply.py
 
 functions:
   keyboard:
