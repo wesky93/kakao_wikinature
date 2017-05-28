@@ -34,6 +34,9 @@ provider:
         - "logs:PutLogEvents"
       Resource: "arn:aws:logs:*"
 
+  environment:
+    SENTRY: "https://4d1cae1ae3fa4a7ea8c51d3587113a80:08dd5f94c8dd4c41a7d07225dd502185@sentry.io/173039"
+
 package:
   individually: true
   exclude:
