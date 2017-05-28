@@ -86,7 +86,7 @@ class KakaoReply :
                  photo_height: str = 630,
                  butn_label: str = None,
                  butn_url: str = None,
-                 keyboard:dict = None
+                 keyboard: dict = None
                  ) :
         """
         리스폰 메시시 생성
@@ -96,7 +96,7 @@ class KakaoReply :
         :param photo_height: 이미지 높이(defalut:720)
         :param butn_label: 버튼 라벨
         :param butn_url: 버튼 클릭시 이동할 url
-        :param keyboard: 다음 진행을 위한 키보드 버튼
+        :param keyboard: 다음 진행을 위한 키보드 버튼(default: 기본 메인 키보드 버튼)
         :return: 
         """
 
@@ -106,19 +106,23 @@ class KakaoReply :
             msg[ 'text' ] = text
 
         if photo_url :
+            msg[ 'photo' ] = { }
             msg[ 'photo' ][ 'url' ] = photo_url
             msg[ 'photo' ][ 'width' ] = photo_width
             msg[ 'photo' ][ 'height' ] = photo_height
 
         if butn_label :
+            msg[ 'message_button' ] = { }
             msg[ 'message_button' ][ 'label' ] = butn_label
             msg[ 'message_button' ][ 'url' ] = butn_url
 
         result = { 'message' : msg }
 
         # 추가 키보드 버튼 출력
-        if keyboard:
-            result['keyboard'] = keyboard
+        if keyboard :
+            result[ 'keyboard' ] = keyboard
+        else :
+            result[ 'keyboard' ] = self.main_keyboard()
 
         return result
 
@@ -130,8 +134,8 @@ class KakaoReply :
         :return: 
         """
         # 요청된 명령어가 기본 명령어에 존재할경우 해당 메소드 실행
-        if self.content in self.butns_index :
-            return self.butns_index[ self.content ]
+        if self.content in self.cmd_index :
+            return self.cmd_index[ self.content ]
         # 기본 명령어가 아닐경우 확장 명령어 메소드 실행
         else :
             return self.extend_cmd( self.content )
@@ -153,4 +157,4 @@ class KakaoReply :
         :param cmd: 
         :return: 
         """
-        return self.main_keyboard()
+        return self.message("해당 요청에 대한 결과가 없습니다",keyboard=self.main_keyboard())
