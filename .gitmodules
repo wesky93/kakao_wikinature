@@ -1,0 +1,3 @@
+[submodule "lambdAWS"]
+	path = lambdAWS
+	url = https://github.com/wesky93/lambdAWS.git
